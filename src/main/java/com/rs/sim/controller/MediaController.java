@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MediaController {
 
-	private final MediaService mediaService;
+  private final MediaService mediaService;
 
-	@Autowired
-	public MediaController(final MediaService mediaService) {
-		this.mediaService = mediaService;
-	}
+  @Autowired
+  public MediaController(final MediaService mediaService) {
+    this.mediaService = mediaService;
+  }
 
-	@PostMapping(
-			value = "/media",
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE)
-	private ResponseEntity<CreateMediaResponse> createMedia(
-			@Valid @RequestBody final CreateMediaRequest request) throws UserAuthenticationException {
+  @PostMapping(
+      value = "/media",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  private ResponseEntity<CreateMediaResponse> createMedia(
+      @Valid @RequestBody final CreateMediaRequest request) throws UserAuthenticationException {
 
-		String url = mediaService.createMedia(request);
-		return ResponseEntity.ok(new CreateMediaResponse(url));
-	}
+    String url = mediaService.createMedia(request);
+    return ResponseEntity.ok(new CreateMediaResponse(url));
+  }
 
-	@ExceptionHandler(UserAuthenticationException.class)
-	@ResponseStatus(HttpStatus.FORBIDDEN)
-	public void bearerAuthException(final UserAuthenticationException exception) {}
+  @ExceptionHandler(UserAuthenticationException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  public void bearerAuthException(final UserAuthenticationException exception) {}
 }

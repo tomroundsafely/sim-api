@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,17 +12,16 @@ import java.util.UUID;
 @Table(name = "media")
 public class Media {
 
-	@Id
-	private String id;
-	private String type;
-	private String access;
+  @Id private String id;
+  private String type;
+  private String access;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private Consumer consumer;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  private Consumer consumer;
 
-	private String kinesis_url;
-	private String tag;
-	private String name;
-	private String description;
+  private String kinesis_url;
+  private String tag;
+  private String name;
+  private String description;
 }
