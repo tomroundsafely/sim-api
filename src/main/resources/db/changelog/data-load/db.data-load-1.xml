@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="load-org" author="Tom Brewster" logicalFilePath="data_load/data_load-1.xml" runOnChange="true">
+        <preConditions>
+            <tableExists tableName="organisation"/>
+        </preConditions>
+        <loadUpdateData primaryKey="id" tableName="organisation" file="organisations.csv" relativeToChangelogFile="true">
+        </loadUpdateData>
+    </changeSet>
+</databaseChangeLog>

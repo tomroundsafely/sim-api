@@ -1,0 +1,56 @@
+plugins {
+	id 'org.springframework.boot' version '3.0.0-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'checkstyle'
+	id "com.diffplug.spotless" version "6.7.0"
+}
+
+group = 'com.rs'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.liquibase:liquibase-core'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+spotless {
+	if (System.getenv('GITHUB_SHA') == null) {
+		// Only examine changes since we forked from main
+		ratchetFrom 'origin/main'
+	} else {
+		// If we're running in CI, we don't have access to the main branch
+		// This essentially disables format checking, as we ratchet to only
+		// uncommited changes, and we're working on a fresh checkout in CI
+		ratchetFrom 'HEAD'
+	}
+
+	java {
+		target "src/**/*.java"
+		googleJavaFormat()
+	}
+}

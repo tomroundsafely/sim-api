@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
+
+    <changeSet id="202206081600" author="Tom Brewster">
+        <createTable tableName="organisation">
+            <column name="id" type="varchar(250)">
+                <constraints primaryKey="true" primaryKeyName="org_id_pk" />
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="disabled" type="boolean" defaultValueBoolean="true"></column>
+        </createTable>
+
+        <createTable tableName="consumer">
+            <column name="id" type="varchar(250)">
+                <constraints primaryKey="true" primaryKeyName="user_id_pk" />
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="email" type="varchar(250)"/>
+            <column name="org_id" type="varchar(250)"/>
+            <column name="disabled" type="boolean" defaultValueBoolean="true"></column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="consumer" baseColumnNames="org_id" constraintName="user_org_id_fk" referencedTableName="organisation" referencedColumnNames="id" />
+
+
+        <createTable tableName="media">
+            <column name="id" type="varchar(250)">
+                <constraints primaryKey="true" primaryKeyName="media_id_pk" />
+            </column>
+            <column name="type" type="varchar(50)"/>
+            <column name="access" type="varchar(50)"/>
+            <column name="user_id" type="varchar(250)"/>
+            <column name="kinesis_url" type="varchar(250)"/>
+            <column name="tag" type="varchar(50)"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="description" type="varchar(250)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="media" baseColumnNames="user_id" constraintName="media_user_id_fk" referencedTableName="consumer" referencedColumnNames="id" />
+
+    </changeSet>
+</databaseChangeLog>
