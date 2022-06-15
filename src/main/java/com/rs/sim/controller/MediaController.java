@@ -3,6 +3,7 @@ package com.rs.sim.controller;
 import com.rs.sim.controller.model.CreateMediaRequest;
 import com.rs.sim.controller.model.CreateMediaResponse;
 import com.rs.sim.exception.UserAuthenticationException;
+import com.rs.sim.security.AuthenticateBearerToken;
 import com.rs.sim.service.MediaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class MediaController {
     this.mediaService = mediaService;
   }
 
+//  @AuthenticateBearerToken
   @PostMapping(
       value = "/media",
       consumes = MediaType.APPLICATION_JSON_VALUE,

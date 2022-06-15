@@ -31,10 +31,10 @@ public class MediaService {
 
   @Autowired
   public MediaService(
-          final MediaRepository mediaRepository,
-          final ConsumerRepository consumerRepository,
-          final AmazonS3 amazonS3,
-          @Value("${s3.bucket.name}") final String s3ArchiveBucket) {
+      final MediaRepository mediaRepository,
+      final ConsumerRepository consumerRepository,
+      final AmazonS3 amazonS3,
+      @Value("${s3.bucket.name}") final String s3ArchiveBucket) {
     this.mediaRepository = mediaRepository;
     this.consumerRepository = consumerRepository;
     this.amazonS3 = amazonS3;
@@ -65,9 +65,7 @@ public class MediaService {
     String key =
         String.format(
             "%s/%s/%s",
-            consumer.get().getOrganisation().getId(),
-            consumer.get().getId(),
-            media.getId());
+            consumer.get().getOrganisation().getId(), consumer.get().getId(), media.getId());
     return generateUrl(s3ArchiveBucket, key, HttpMethod.PUT);
   }
 
